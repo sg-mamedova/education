@@ -1,0 +1,81 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <title>Color Guessing Game_Part1</title>
+
+    <script type="text/javascript">
+
+        function do_game() {
+            var
+                colors = ["Aqua", "Azure", "Blue", "DeepPink", "Crimson", "Coral", "DarkOrange", "Brown", "Green",
+                    "Khaki", "Gold", "Cyan", "DarkSalmon", "Maroon", "Plum"],
+                guesses = 0,
+                finished = false,
+                random_color,
+                random_color_index,
+                input_color,
+                input_color_index;
+
+            colors = colors.sort();
+
+            random_color_index = Math.floor(Math.random()*colors.length);
+            random_color = colors[random_color_index];
+
+            console.log(random_color_index);
+            console.log(random_color);
+
+            while (!finished && guesses < 100) {
+                input_color = prompt("I am thinking one of these colors:\n\n" + colors.join("\n") + "\n\n" +"What color I am thinking of?");
+                input_color_index = colors.indexOf(input_color);
+                guesses += 1;
+                console.log('input_color --> ', input_color);
+                console.log('input_color_index --> ', input_color_index);
+                finished = check_guess(input_color, input_color_index, random_color_index, guesses);
+             }
+
+        }
+
+        function check_guess(input_color, input_color_index, random_color_index, quesses) {
+            if (!input_color) {
+                alert("You have not entered the color.\n\n" + "Please, enter the color");
+                return false;
+            }
+
+            if (input_color_index === -1) {
+                alert("You, have enter a wrong color.");
+                return false;
+            }
+
+            if (input_color_index > random_color_index) {
+                alert("Sorry your guesses is not correct!\n\n"
+                    + "Your color is alphabetically lower than mine.\n\n" + "Please try again.");
+                return false;
+            }
+
+            if (input_color_index < random_color_index) {
+                alert("Sorry your guesses is not correct!\n\n"
+                    + "Your color is alphabetically higher than mine.\n\n" + "Please try again.");
+                return false;
+            }
+
+            var myBody = document.getElementsByTagName("body")[0];
+            myBody.style.background = input_color;
+
+            alert("Congratulation! You have guessed the color! The color was " + input_color + "\n\n" +
+            "It took you " + quesses + " quesses to finish tha game!\n\n"
+            + "You can see the color in the background.");
+
+            return true;
+
+        }
+
+    </script>
+
+</head>
+
+<body onload="do_game()">
+
+</body>
+
+</html>
